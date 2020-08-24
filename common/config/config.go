@@ -1,14 +1,16 @@
 package config
 
 type Conf struct {
-	StatAddr string
+	StatAddr     string
+	SlackWebhook string //https://hooks.slack.com/services/<ID>
 }
 
 var App *Conf
 
 func Runtime() {
 	c := Conf{
-		StatAddr: "",
+		StatAddr:     "",
+		SlackWebhook: "",
 	}
 
 	App = &c
