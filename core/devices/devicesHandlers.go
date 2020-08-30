@@ -15,19 +15,13 @@ func GetDevices(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	device := strings.ToLower(vars["type"])
 
-	if device == "all" {
-		devices, err := getAllLoadedDevices(device)
-		if err != nil {
-			w.WriteHeader(http.StatusInternalServerError)
-			stat.Http(r.Method, stat.HTTPIN, r.URL.String(), http.StatusInternalServerError)
-			return
-		}
-
-		respond(w, r, devices)
-	}
-
 	devices, err := getAllLoadedDevices(device)
 	if err != nil {
+		if err.Error() == "invalid device type"{
+			w.WriteHeader(http.StatusBadRequest)
+			stat.Http(r.Method, stat.HTTPIN, r.URL.String(), http.StatusBadRequest)
+		}
+
 		w.WriteHeader(http.StatusInternalServerError)
 		stat.Http(r.Method, stat.HTTPIN, r.URL.String(), http.StatusInternalServerError)
 		return

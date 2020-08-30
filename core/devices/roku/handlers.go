@@ -21,9 +21,11 @@ func HandlerInfoGet(w http.ResponseWriter, r *http.Request) {
 		stat.Http(r.Method, stat.HTTPIN, r.URL.String(), http.StatusInternalServerError)
 		return
 	}
+	log.Printf("ANDY: info: %+v", c)
 
 	info, err := c.getInfo()
 	if err != nil {
+		log.Printf("ANDY: get info %s", err)
 		w.WriteHeader(http.StatusInternalServerError)
 		stat.Http(r.Method, stat.HTTPIN, r.URL.String(), http.StatusInternalServerError)
 		return

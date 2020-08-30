@@ -1,6 +1,7 @@
 package devices
 
 import (
+	"fmt"
 	"github.com/rebelit/gome-core/common/config"
 	"github.com/rebelit/gome-core/core/devices/roku"
 	"log"
@@ -34,8 +35,8 @@ func getLoadedDeviceTypes() (types []string, error error) {
 }
 
 func getAllLoadedDevices(typeFilter string) (devices []Device, error error) {
-
-	if typeFilter == "roku" || typeFilter == "all" {
+	switch typeFilter {
+	case  "roku", "all":
 		rokus, err := roku.GetAllDevicesFromDb()
 		if err != nil {
 			log.Printf("ERROR: unable to get roku devices")
@@ -50,13 +51,14 @@ func getAllLoadedDevices(typeFilter string) (devices []Device, error error) {
 			}
 			devices = append(devices, d)
 		}
-	}
 	//ToDo: range over other device types. May have to
 	//		split these out into other helper functions later
 	//		depending how many device types det added.
-	//if typeFilter == "rpiot" || typeFilter == "all" {
+	//case "rpiot", "all":
 	//
-	//}
+	default:
+		return devices, fmt.Errorf("invalid device type")
+	}
 
 	return devices, nil
 }
@@ -92,7 +94,9 @@ func getDbFileNames(path string) (dbs []string, error error) {
 	}
 
 	for _, file := range files {
-		dbs = append(dbs, file.Name())
+		if file.IsDir(){
+			dbs = append(dbs, file.Name())
+		}
 	}
 
 	return dbs, nil

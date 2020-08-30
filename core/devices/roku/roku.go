@@ -8,6 +8,7 @@ import (
 	"github.com/rebelit/gome-core/common/httpRequest"
 	"github.com/rebelit/gome-core/database"
 	"io/ioutil"
+	"log"
 )
 
 type Actions interface {
@@ -22,9 +23,9 @@ type Actions interface {
 }
 
 type Client struct {
-	Name    string
-	Address string
-	Port    string
+	Name    string `json:"name"`
+	Address string `json:"address"`
+	Port    string `json:"port"`
 }
 
 const DBNAME = "roku"
@@ -61,8 +62,10 @@ func (c *Client) getInfo() (deviceInfo DeviceInfo, error error) {
 	if response.StatusCode != 200 {
 		return deviceInfo, fmt.Errorf("non-200 response %d", response.StatusCode)
 	}
-	defer response.Body.Close()
+
 	body, err := ioutil.ReadAll(response.Body)
+	defer response.Body.Close()
+	log.Printf("ANDY: response %+v",string(body))
 
 	if err := xml.Unmarshal(body, &deviceInfo); err != nil {
 		return deviceInfo, err
@@ -215,11 +218,10 @@ func unmarshalClient(data []byte) (client Client) {
 
 //Public functions
 func InitializeDb() error {
-	db, err := database.Open(config.App.DbPath)
+	db, err := database.Open(fmt.Sprintf("%s/%s", config.App.DbPath, DBNAME))
 	if err != nil {
 		return err
 	}
-	defer db.Close()
 
 	_, err = db.GetAllKeys()
 	if err != nil {
@@ -235,7 +237,6 @@ func GetDeviceFromDb(name string) (client Client, error error) {
 	if err != nil {
 		return client, err
 	}
-	defer db.Close()
 
 	data, err := db.Get(name)
 	if err != nil {
@@ -246,11 +247,10 @@ func GetDeviceFromDb(name string) (client Client, error error) {
 }
 
 func GetAllDevicesFromDb() (clients []Client, error error) {
-	db, err := database.Open(config.App.DbPath)
+	db, err := database.Open(fmt.Sprintf("%s/%s", config.App.DbPath, DBNAME))
 	if err != nil {
 		return clients, err
 	}
-	defer db.Close()
 
 	keys, err := db.GetAllKeys()
 	if err != nil {
@@ -276,7 +276,6 @@ func LoadDevice(data []byte) error {
 	if err != nil {
 		return err
 	}
-	defer db.Close()
 
 	value, _ := json.Marshal(client)
 	err = db.Set(client.Name, value)
