@@ -16,6 +16,10 @@ type SlackMsg struct {
 }
 
 func Slack(message string) {
+	if config.App.SlackWebhook == ""{
+		log.Printf("DEBUG: would have sent slack: %s", message)
+		return
+	}
 	content := SlackMsg{}
 	content.Text = message
 	content.Username = "gome"

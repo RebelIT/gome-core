@@ -15,7 +15,7 @@ var App *Conf
 func Runtime() {
 	c := Conf{
 		StatAddr:     "",
-		SlackWebhook: "hooks.slack.com/guid/or/something",
+		SlackWebhook: "",
 		//DbPath:       "/usr/local/gome-core/db",
 		DbPath:    "mocks", //local testing in development
 		Name:      "gome-core",
