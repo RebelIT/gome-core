@@ -150,7 +150,7 @@ func (c *Client) getApps() (apps Apps, error error) {
 	return apps, nil
 }
 
-func (c *Client) getActiveApp() (app App, error error) {
+func (c *Client) getActiveApp() (app ActiveApp, error error) {
 	url := fmt.Sprintf("http://%s:%s/query/active-app", c.Address, c.Port)
 
 	response, err := httpRequest.Get(url, nil)

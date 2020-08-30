@@ -69,6 +69,6 @@ type JsonActiveApp struct {
 
 type JsonApp struct {
 	ID      string `json:"id"`
-	Type    string `json:"type"`
+	Text 	string `json:"text"`
 	Version string `json:"version"`
 }

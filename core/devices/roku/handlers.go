@@ -40,6 +40,7 @@ func HandlerPowerSet(w http.ResponseWriter, r *http.Request) {
 	name := strings.ToLower(vars["name"])
 	power := strings.ToLower(vars["state"])
 
+	//todo: validate the input from defined arr of options in powerToBool func.
 	state, err := powerToBool(power)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
@@ -295,7 +296,7 @@ func xmlToJsonApps(apps Apps) JsonApps {
 	for _, a := range apps.App {
 		ja := JsonApp{
 			ID:      a.ID,
-			Type:    a.Type,
+			Text:    a.Text,
 			Version: a.Version,
 		}
 		jApps.Apps = append(jApps.Apps, ja)
@@ -304,10 +305,10 @@ func xmlToJsonApps(apps Apps) JsonApps {
 	return jApps
 }
 
-func xmlToJsonActiveApp(app App) JsonApp {
+func xmlToJsonActiveApp(app ActiveApp) JsonApp {
 	return JsonApp{
-		ID:      app.ID,
-		Type:    app.Type,
-		Version: app.Version,
+		ID:      app.App.ID,
+		Text:    app.App.Text,
+		Version: app.App.Version,
 	}
 }
