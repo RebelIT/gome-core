@@ -219,11 +219,13 @@ func InitializeDb() error {
 	if err != nil {
 		return err
 	}
+	defer db.Close()
 
 	_, err = db.GetAllKeys()
 	if err != nil {
 		return err
 	}
+
 
 	return nil
 }
@@ -233,6 +235,7 @@ func GetDeviceFromDb(name string) (client Client, error error) {
 	if err != nil {
 		return client, err
 	}
+	defer db.Close()
 
 	data, err := db.Get(name)
 	if err != nil {
@@ -247,6 +250,7 @@ func GetAllDevicesFromDb() (clients []Client, error error) {
 	if err != nil {
 		return clients, err
 	}
+	defer db.Close()
 
 	keys, err := db.GetAllKeys()
 	if err != nil {
@@ -272,6 +276,7 @@ func LoadDevice(data []byte) error {
 	if err != nil {
 		return err
 	}
+	defer db.Close()
 
 	value, _ := json.Marshal(client)
 	err = db.Set(client.Name, value)

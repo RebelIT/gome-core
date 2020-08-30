@@ -34,6 +34,7 @@ func getLoadedDeviceTypes() (types []string, error error) {
 }
 
 func getAllLoadedDevices(typeFilter string) (devices []Device, error error) {
+
 	if typeFilter == "roku" || typeFilter == "all" {
 		rokus, err := roku.GetAllDevicesFromDb()
 		if err != nil {
