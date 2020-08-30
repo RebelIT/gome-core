@@ -19,15 +19,15 @@ func HandlerInfoGet(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		stat.Http(r.Method, stat.HTTPIN, r.URL.String(), http.StatusInternalServerError)
+		log.Printf("ERROR: roku HandlerInfoGet %s", err)
 		return
 	}
-	log.Printf("ANDY: info: %+v", c)
 
 	info, err := c.getInfo()
 	if err != nil {
-		log.Printf("ANDY: get info %s", err)
 		w.WriteHeader(http.StatusInternalServerError)
 		stat.Http(r.Method, stat.HTTPIN, r.URL.String(), http.StatusInternalServerError)
+		log.Printf("ERROR: roku HandlerInfoGet %s", err)
 		return
 	}
 
@@ -45,6 +45,7 @@ func HandlerPowerSet(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		stat.Http(r.Method, stat.HTTPIN, r.URL.String(), http.StatusBadRequest)
+		log.Printf("ERROR: roku HandlerPowerSet %s", err)
 		return
 	}
 
@@ -52,12 +53,14 @@ func HandlerPowerSet(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		stat.Http(r.Method, stat.HTTPIN, r.URL.String(), http.StatusInternalServerError)
+		log.Printf("ERROR: roku HandlerPowerSet %s", err)
 		return
 	}
 
 	if err := c.controlPowerState(state); err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		stat.Http(r.Method, stat.HTTPIN, r.URL.String(), http.StatusInternalServerError)
+		log.Printf("ERROR: roku HandlerPowerSet %s", err)
 		return
 	}
 
@@ -74,6 +77,7 @@ func HandlerPowerGet(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		stat.Http(r.Method, stat.HTTPIN, r.URL.String(), http.StatusInternalServerError)
+		log.Printf("ERROR: roku HandlerPowerGet %s", err)
 		return
 	}
 
@@ -81,6 +85,7 @@ func HandlerPowerGet(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		stat.Http(r.Method, stat.HTTPIN, r.URL.String(), http.StatusInternalServerError)
+		log.Printf("ERROR: roku HandlerPowerGet %s", err)
 		return
 	}
 
@@ -101,6 +106,7 @@ func HandlerOnlineGet(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		stat.Http(r.Method, stat.HTTPIN, r.URL.String(), http.StatusInternalServerError)
+		log.Printf("ERROR: roku HandlerOnlineGet %s", err)
 		return
 	}
 
@@ -108,6 +114,7 @@ func HandlerOnlineGet(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		stat.Http(r.Method, stat.HTTPIN, r.URL.String(), http.StatusInternalServerError)
+		log.Printf("ERROR: roku HandlerOnlineGet %s", err)
 		return
 	}
 
@@ -128,6 +135,7 @@ func HandlerAppGet(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		stat.Http(r.Method, stat.HTTPIN, r.URL.String(), http.StatusInternalServerError)
+		log.Printf("ERROR: roku HandlerAppGet %s", err)
 		return
 	}
 
@@ -135,6 +143,7 @@ func HandlerAppGet(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		stat.Http(r.Method, stat.HTTPIN, r.URL.String(), http.StatusInternalServerError)
+		log.Printf("ERROR: roku HandlerAppGet %s", err)
 		return
 	}
 
@@ -150,6 +159,7 @@ func HandlerAppActiveGet(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		stat.Http(r.Method, stat.HTTPIN, r.URL.String(), http.StatusInternalServerError)
+		log.Printf("ERROR: roku HandlerAppActiveGet %s", err)
 		return
 	}
 
@@ -157,6 +167,7 @@ func HandlerAppActiveGet(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		stat.Http(r.Method, stat.HTTPIN, r.URL.String(), http.StatusInternalServerError)
+		log.Printf("ERROR: roku HandlerAppActiveGet %s", err)
 		return
 	}
 
@@ -173,6 +184,7 @@ func HandlerApplaunch(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		stat.Http(r.Method, stat.HTTPIN, r.URL.String(), http.StatusInternalServerError)
+		log.Printf("ERROR: roku HandlerApplaunch %s", err)
 		return
 	}
 
@@ -180,18 +192,21 @@ func HandlerApplaunch(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		stat.Http(r.Method, stat.HTTPIN, r.URL.String(), http.StatusInternalServerError)
+		log.Printf("ERROR: roku HandlerApplaunch %s", err)
 		return
 	}
 
 	if !validateAppInput(id, apps) {
 		w.WriteHeader(http.StatusBadRequest)
 		stat.Http(r.Method, stat.HTTPIN, r.URL.String(), http.StatusBadRequest)
+		log.Printf("ERROR: roku HandlerApplaunch %s", err)
 		return
 	}
 
 	if err := c.launchApp(id); err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		stat.Http(r.Method, stat.HTTPIN, r.URL.String(), http.StatusInternalServerError)
+		log.Printf("ERROR: roku HandlerApplaunch %s", err)
 		return
 	}
 
@@ -207,6 +222,7 @@ func HandlerKeypress(w http.ResponseWriter, r *http.Request) {
 	if !validateKeyInput(key) {
 		w.WriteHeader(http.StatusBadRequest)
 		stat.Http(r.Method, stat.HTTPIN, r.URL.String(), http.StatusBadRequest)
+		log.Printf("ERROR: roku HandlerKeypress %s", fmt.Errorf("bad input %s",key))
 		return
 	}
 
@@ -214,12 +230,14 @@ func HandlerKeypress(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		stat.Http(r.Method, stat.HTTPIN, r.URL.String(), http.StatusInternalServerError)
+		log.Printf("ERROR: roku HandlerKeypress %s", err)
 		return
 	}
 
 	if err := c.keyPress(key); err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		stat.Http(r.Method, stat.HTTPIN, r.URL.String(), http.StatusInternalServerError)
+		log.Printf("ERROR: roku HandlerKeypress %s", err)
 		return
 	}
 

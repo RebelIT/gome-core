@@ -30,7 +30,7 @@ func counter(measurement string, tags statsd.Option) {
 	fmtOpt := statsd.TagsFormat(statsd.InfluxDB)
 	s, err := statsd.New(addrOpt, fmtOpt, tags)
 	if err != nil {
-		log.Printf("ERROR sending %s counter %s", measurement, err)
+		log.Printf("ERROR: sending %s counter %s", measurement, err)
 	}
 	defer s.Close()
 
@@ -47,7 +47,7 @@ func gauge(measurement string, tags statsd.Option, value int) {
 	fmtOpt := statsd.TagsFormat(statsd.InfluxDB)
 	s, err := statsd.New(addrOpt, fmtOpt, tags)
 	if err != nil {
-		log.Printf("ERROR sending %s gauge %s", measurement, err)
+		log.Printf("ERROR: sending %s gauge %s", measurement, err)
 	}
 	defer s.Close()
 

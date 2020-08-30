@@ -36,7 +36,7 @@ func getLoadedDeviceTypes() (types []string, error error) {
 
 func getAllLoadedDevices(typeFilter string) (devices []Device, error error) {
 	switch typeFilter {
-	case  "roku", "all":
+	case "roku", "all":
 		rokus, err := roku.GetAllDevicesFromDb()
 		if err != nil {
 			log.Printf("ERROR: unable to get roku devices")
@@ -94,7 +94,7 @@ func getDbFileNames(path string) (dbs []string, error error) {
 	}
 
 	for _, file := range files {
-		if file.IsDir(){
+		if file.IsDir() {
 			dbs = append(dbs, file.Name())
 		}
 	}

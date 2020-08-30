@@ -8,7 +8,6 @@ import (
 	"github.com/rebelit/gome-core/common/httpRequest"
 	"github.com/rebelit/gome-core/database"
 	"io/ioutil"
-	"log"
 )
 
 type Actions interface {
@@ -65,7 +64,6 @@ func (c *Client) getInfo() (deviceInfo DeviceInfo, error error) {
 
 	body, err := ioutil.ReadAll(response.Body)
 	defer response.Body.Close()
-	log.Printf("ANDY: response %+v",string(body))
 
 	if err := xml.Unmarshal(body, &deviceInfo); err != nil {
 		return deviceInfo, err
@@ -227,7 +225,6 @@ func InitializeDb() error {
 	if err != nil {
 		return err
 	}
-
 
 	return nil
 }

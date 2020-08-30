@@ -9,6 +9,7 @@ import (
 )
 
 func main() {
+	log.Printf("INFO: I'm starting")
 	config.Runtime()
 	devices.InitializeDatabases()
 
@@ -18,7 +19,7 @@ func main() {
 }
 
 func start(port string) {
-	log.Printf("Starting %s on http:%s", config.App.Name, port)
+	log.Printf("INFO: listening %s on http:%s", config.App.Name, port)
 	router := web.NewRouter()
 	log.Fatal(http.ListenAndServe(":"+port, router))
 }

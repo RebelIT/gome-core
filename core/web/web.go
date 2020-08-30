@@ -66,11 +66,10 @@ func authMiddleware(next http.Handler) http.Handler {
 			authorization := r.Header.Get("Authorization")
 			if validateAuth(authorization) {
 				// Pass down the request to the next handler
-				log.Printf("INFO: http authorized %s:%s", r.Method, r.URL.String())
 				next.ServeHTTP(w, r)
 
 			} else {
-				log.Printf("INFO: http unauthorized %s:%s", r.Method, r.URL.String())
+				log.Printf("WARN: http unauthorized %s:%s from %s", r.Method, r.URL.String(), r.RemoteAddr)
 				w.WriteHeader(http.StatusUnauthorized)
 				stat.Http(r.Method, stat.HTTPIN, r.URL.String(), http.StatusUnauthorized)
 

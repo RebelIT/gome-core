@@ -17,13 +17,16 @@ func GetDevices(w http.ResponseWriter, r *http.Request) {
 
 	devices, err := getAllLoadedDevices(device)
 	if err != nil {
-		if err.Error() == "invalid device type"{
+		if err.Error() == "invalid device type" {
 			w.WriteHeader(http.StatusBadRequest)
 			stat.Http(r.Method, stat.HTTPIN, r.URL.String(), http.StatusBadRequest)
+			log.Printf("ERROR: devices GetDevices %s", err)
+			return
 		}
 
 		w.WriteHeader(http.StatusInternalServerError)
 		stat.Http(r.Method, stat.HTTPIN, r.URL.String(), http.StatusInternalServerError)
+		log.Printf("ERROR: devices GetDevices %s", err)
 		return
 	}
 
@@ -38,6 +41,7 @@ func GetDeviceTypes(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		stat.Http(r.Method, stat.HTTPIN, r.URL.String(), http.StatusInternalServerError)
+		log.Printf("ERROR: devices GetDeviceTypes %s", err)
 		return
 	}
 
@@ -58,6 +62,7 @@ func LoadDevice(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		stat.Http(r.Method, stat.HTTPIN, r.URL.String(), http.StatusBadRequest)
+		log.Printf("ERROR: devices LoadDevice %s", err)
 		return
 	}
 
@@ -66,6 +71,7 @@ func LoadDevice(w http.ResponseWriter, r *http.Request) {
 		if err := roku.LoadDevice(data); err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			stat.Http(r.Method, stat.HTTPIN, r.URL.String(), http.StatusInternalServerError)
+			log.Printf("ERROR: devices LoadDevice roku %s", err)
 			return
 		}
 

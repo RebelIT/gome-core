@@ -17,12 +17,10 @@ type Conf struct {
 var App *Conf
 
 func Runtime() {
+	log.Printf("INFO: loading runtime configuration")
 	c := &Conf{}
-	log.Printf("empty %+v", c)
 	configDefaults(c)
-	log.Printf("defaults %+v", c)
 	configFlags(c)
-	log.Printf("flags %+v", c)
 
 	App = c
 	return
