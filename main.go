@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/rebelit/gome-core/core/devices"
 	"github.com/rebelit/gome-core/web"
 	"log"
 	"net/http"
@@ -8,6 +9,9 @@ import (
 
 func main() {
 	port := "6660"
+
+	devices.InitializeDatabases()
+
 	start(port)
 
 	return

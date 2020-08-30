@@ -5,20 +5,25 @@ import (
 	"github.com/rebelit/gome-core/common/httpRequest"
 )
 
+//ToDo:  complete this package... need a rpIoT go-client from swagger 1st.
 type Device interface {
 	GetState() (state bool, error error)
 	Reboot() error
 }
 
 type Client struct {
-	Name    string
-	Id      string
 	Address string
 	Port    string
-	Gpio    Pin
+	Meta    Meta
+}
+
+type Meta struct {
+	Gpio   Pin
+	Action string
 }
 
 type Pin struct {
+	Name   string
 	Number string
 	Action string
 }

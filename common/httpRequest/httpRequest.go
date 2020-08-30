@@ -3,6 +3,7 @@ package httpRequest
 import (
 	"bytes"
 	"context"
+	"github.com/rebelit/gome-core/common/stat"
 	"net/http"
 	"time"
 )
@@ -25,6 +26,7 @@ func Post(url string, body []byte, headers map[string]string) (response http.Res
 		return http.Response{}, err
 	}
 
+	stat.Http(req.Method, stat.HTTPOUT, req.URL.String(), resp.StatusCode)
 	return *resp, nil
 }
 
@@ -46,6 +48,7 @@ func Put(url string, body []byte, headers map[string]string) (response http.Resp
 		return http.Response{}, err
 	}
 
+	stat.Http(req.Method, stat.HTTPOUT, req.URL.String(), resp.StatusCode)
 	return *resp, nil
 }
 
@@ -67,6 +70,7 @@ func Delete(url string, body []byte, headers map[string]string) (response http.R
 		return http.Response{}, err
 	}
 
+	stat.Http(req.Method, stat.HTTPOUT, req.URL.String(), resp.StatusCode)
 	return *resp, nil
 }
 
@@ -88,5 +92,6 @@ func Get(url string, headers map[string]string) (response http.Response, error e
 		return http.Response{}, err
 	}
 
+	stat.Http(req.Method, stat.HTTPOUT, req.URL.String(), resp.StatusCode)
 	return *resp, nil
 }

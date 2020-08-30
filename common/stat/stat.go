@@ -6,6 +6,13 @@ import (
 	"log"
 )
 
+const (
+	STATEOK      = "ok"
+	STATEFAILURE = "error"
+	HTTPIN       = "inbound"
+	HTTPOUT      = "outbound"
+)
+
 func disabled() bool {
 	if config.App.StatAddr == "" {
 		return true
@@ -27,7 +34,7 @@ func counter(measurement string, tags statsd.Option) {
 	}
 	defer s.Close()
 
-	s.Increment(measurement)
+	s.Increment(config.App.Name + "." + measurement)
 	return
 }
 
@@ -44,6 +51,31 @@ func gauge(measurement string, tags statsd.Option, value int) {
 	}
 	defer s.Close()
 
-	s.Gauge(measurement, value)
+	s.Gauge(config.App.Name+"."+measurement, value)
+	return
+}
+
+//Public package specific metrics
+func Database(action string, state string) {
+	measurement := "database"
+	tags := statsd.Tags("action", action, "state", state)
+
+	counter(measurement, tags)
+	return
+}
+
+func Notify(service string, state string, statusCode int) {
+	measurement := "notify"
+	tags := statsd.Tags("service", service, "state", state)
+
+	gauge(measurement, tags, statusCode)
+	return
+}
+
+func Http(method string, direction string, url string, statusCode int) {
+	measurement := "http"
+	tags := statsd.Tags("direction", direction, "url", url)
+
+	gauge(measurement, tags, statusCode)
 	return
 }

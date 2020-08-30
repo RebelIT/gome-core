@@ -33,11 +33,11 @@ func Open(path string) (Database, error) {
 	db, err := badger.Open(opts)
 	if err != nil {
 		log.Printf("ERROR: database %s open %s", path, err)
-		stat.Database("open", "error")
+		stat.Database("open", stat.STATEFAILURE)
 		return d, err
 	}
 
-	stat.Database("open", "ok")
+	stat.Database("open", stat.STATEOK)
 	d.db = db
 	return d, nil
 }
@@ -58,11 +58,11 @@ func (d Badger) Set(key string, value []byte) error {
 	})
 	if err != nil {
 		log.Printf("ERROR: database set %s", err)
-		stat.Database("set", "error")
+		stat.Database("set", stat.STATEFAILURE)
 		return err
 	}
 
-	stat.Database("set", "ok")
+	stat.Database("set", stat.STATEOK)
 	return nil
 }
 
@@ -73,11 +73,11 @@ func (d Badger) Delete(key string) error {
 	})
 	if err != nil {
 		log.Printf("ERROR: database delete %s", err)
-		stat.Database("delete", "error")
+		stat.Database("delete", stat.STATEFAILURE)
 		return err
 	}
 
-	stat.Database("delete", "ok")
+	stat.Database("delete", stat.STATEOK)
 	return nil
 }
 
@@ -85,11 +85,11 @@ func (d Badger) DeleteAll() error {
 	err := d.db.DropAll()
 	if err != nil {
 		log.Printf("ERROR: database delete_all %s", err)
-		stat.Database("delete", "error")
+		stat.Database("delete", stat.STATEFAILURE)
 		return err
 	}
 
-	stat.Database("delete", "ok")
+	stat.Database("delete", stat.STATEOK)
 	return nil
 }
 
@@ -99,7 +99,7 @@ func (d Badger) Get(key string) ([]byte, error) {
 		item, err := txn.Get([]byte(key))
 		if err != nil {
 			log.Printf("ERROR: database get %s", err)
-			stat.Database("get", "error")
+			stat.Database("get", stat.STATEFAILURE)
 			return err
 		}
 
@@ -108,7 +108,7 @@ func (d Badger) Get(key string) ([]byte, error) {
 		})
 		if err != nil {
 			log.Printf("ERROR: database get %s", err)
-			stat.Database("get", "error")
+			stat.Database("get", stat.STATEFAILURE)
 			return err
 		}
 
@@ -118,11 +118,11 @@ func (d Badger) Get(key string) ([]byte, error) {
 	})
 	if err != nil {
 		log.Printf("ERROR: database get %s", err)
-		stat.Database("get", "error")
+		stat.Database("get", stat.STATEFAILURE)
 		return nil, err
 	}
 
-	stat.Database("get", "ok")
+	stat.Database("get", stat.STATEOK)
 	return valCopy, nil
 }
 
@@ -142,10 +142,10 @@ func (d Badger) GetAllKeys() ([]string, error) {
 	})
 	if err != nil {
 		log.Printf("ERROR: database get_all %s", err)
-		stat.Database("get", "error")
+		stat.Database("get", stat.STATEFAILURE)
 		return keys, err
 	}
 
-	stat.Database("get", "ok")
+	stat.Database("get", stat.STATEOK)
 	return keys, nil
 }
