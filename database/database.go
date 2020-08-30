@@ -63,6 +63,7 @@ func (d Badger) Set(key string, value []byte) error {
 	}
 
 	stat.Database("set", stat.STATEOK)
+	d.db.Close()
 	return nil
 }
 
@@ -78,6 +79,7 @@ func (d Badger) Delete(key string) error {
 	}
 
 	stat.Database("delete", stat.STATEOK)
+	d.db.Close()
 	return nil
 }
 
@@ -90,6 +92,7 @@ func (d Badger) DeleteAll() error {
 	}
 
 	stat.Database("delete", stat.STATEOK)
+	d.db.Close()
 	return nil
 }
 
@@ -123,6 +126,7 @@ func (d Badger) Get(key string) ([]byte, error) {
 	}
 
 	stat.Database("get", stat.STATEOK)
+	d.db.Close()
 	return valCopy, nil
 }
 
@@ -147,5 +151,6 @@ func (d Badger) GetAllKeys() ([]string, error) {
 	}
 
 	stat.Database("get", stat.STATEOK)
+	d.db.Close()
 	return keys, nil
 }
