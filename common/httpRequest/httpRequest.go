@@ -2,16 +2,11 @@ package httpRequest
 
 import (
 	"bytes"
-	"context"
 	"github.com/rebelit/gome-core/common/stat"
 	"net/http"
-	"time"
 )
 
 func Post(url string, body []byte, headers map[string]string) (response http.Response, err error) {
-	ctx, cncl := context.WithTimeout(context.Background(), time.Second*5)
-	defer cncl()
-
 	req, err := http.NewRequest(http.MethodPost, url, bytes.NewBuffer(body))
 	if err != nil {
 		return http.Response{}, err
@@ -21,7 +16,7 @@ func Post(url string, body []byte, headers map[string]string) (response http.Res
 		req.Header.Set(key, value)
 	}
 
-	resp, err := http.DefaultClient.Do(req.WithContext(ctx))
+	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
 		return http.Response{}, err
 	}
@@ -31,8 +26,8 @@ func Post(url string, body []byte, headers map[string]string) (response http.Res
 }
 
 func Put(url string, body []byte, headers map[string]string) (response http.Response, err error) {
-	ctx, cncl := context.WithTimeout(context.Background(), time.Second*5)
-	defer cncl()
+	//ctx, cncl := context.WithTimeout(context.Background(), time.Second*5)
+	//defer cncl()
 
 	req, err := http.NewRequest(http.MethodPut, url, bytes.NewBuffer(body))
 	if err != nil {
@@ -43,7 +38,8 @@ func Put(url string, body []byte, headers map[string]string) (response http.Resp
 		req.Header.Set(key, value)
 	}
 
-	resp, err := http.DefaultClient.Do(req.WithContext(ctx))
+	//resp, err := http.DefaultClient.Do(req.WithContext(ctx))
+	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
 		return http.Response{}, err
 	}
@@ -53,9 +49,6 @@ func Put(url string, body []byte, headers map[string]string) (response http.Resp
 }
 
 func Delete(url string, body []byte, headers map[string]string) (response http.Response, err error) {
-	ctx, cncl := context.WithTimeout(context.Background(), time.Second*5)
-	defer cncl()
-
 	req, err := http.NewRequest(http.MethodDelete, url, bytes.NewBuffer(body))
 	if err != nil {
 		return http.Response{}, err
@@ -65,7 +58,7 @@ func Delete(url string, body []byte, headers map[string]string) (response http.R
 		req.Header.Set(key, value)
 	}
 
-	resp, err := http.DefaultClient.Do(req.WithContext(ctx))
+	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
 		return http.Response{}, err
 	}
@@ -75,9 +68,6 @@ func Delete(url string, body []byte, headers map[string]string) (response http.R
 }
 
 func Get(url string, headers map[string]string) (response http.Response, error error) {
-	ctx, cncl := context.WithTimeout(context.Background(), time.Second*5)
-	defer cncl()
-
 	req, err := http.NewRequest(http.MethodGet, url, nil)
 	if err != nil {
 		return http.Response{}, err
@@ -87,7 +77,7 @@ func Get(url string, headers map[string]string) (response http.Response, error e
 		req.Header.Set(key, value)
 	}
 
-	resp, err := http.DefaultClient.Do(req.WithContext(ctx))
+	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
 		return http.Response{}, err
 	}
