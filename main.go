@@ -1,24 +1,24 @@
 package main
 
 import (
+	"github.com/rebelit/gome-core/common/config"
 	"github.com/rebelit/gome-core/core/devices"
-	"github.com/rebelit/gome-core/web"
+	"github.com/rebelit/gome-core/core/web"
 	"log"
 	"net/http"
 )
 
 func main() {
-	port := "6660"
-
+	config.Runtime()
 	devices.InitializeDatabases()
 
-	start(port)
+	start(config.App.ListenPort)
 
 	return
 }
 
 func start(port string) {
-	log.Printf("Starting Web Listener on :%v\n", port)
+	log.Printf("Starting %s on http:%s", config.App.Name, port)
 	router := web.NewRouter()
 	log.Fatal(http.ListenAndServe(":"+port, router))
 }
