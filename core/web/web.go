@@ -38,6 +38,7 @@ var routes = Routes{
 	Route{"device", "GET", "/api/device/{type}", devices.GetDevices},
 	Route{"device", "POST", "/api/device/{type}", devices.LoadDevice},
 	Route{"device", "GET", "/api/deviceTypes", devices.GetDeviceTypes},
+	//ToDo: generic endpoints below so type does not have to be hard coded...
 	Route{"roku", "GET", "/api/roku/{name}/info", roku.HandlerInfoGet},
 	Route{"roku", "GET", "/api/roku/{name}/online", roku.HandlerOnlineGet},
 	Route{"roku", "GET", "/api/roku/{name}/power", roku.HandlerPowerGet},
@@ -85,4 +86,17 @@ func validateAuth(authorization string) bool {
 	}
 
 	return false
+}
+
+func GenerateSpec(){
+	router := NewRouter()
+	err := router.Walk(func(route *mux.Route, router *mux.Router, ancestors []*mux.Route) error {
+		tmpl, _ := route.GetPathTemplate()
+		log.Printf("route: %s", tmpl)
+		return nil
+	})
+	if err != nil {
+
+	}
+	return
 }

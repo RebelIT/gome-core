@@ -13,8 +13,12 @@ func main() {
 	config.Runtime()
 	devices.InitializeDatabases()
 
-	start(config.App.ListenPort)
+	if config.App.GenerateSpec{
+		web.GenerateSpec()
+		return
+	}
 
+	start(config.App.ListenPort)
 	return
 }
 
