@@ -34,11 +34,11 @@ Start it up, add devices (kept in local database), hit the api's to perform acti
 2. execute it
 
 ## Supported Devices
-[x] roku
-[] rpIoT (my [raspberryPi IoT](https://github.com/RebelIT/rpIoT) manager webservice)
-[] tuya devices
-[] ecoVacs robot vacuum 
-[] plex
+* [x] roku
+* [] rpIoT (my [raspberryPi IoT](https://github.com/RebelIT/rpIoT) manager webservice)
+* [] tuya devices
+* [] ecoVacs robot vacuum 
+* [] plex
 
 ## Usage: 
 * `/api/status`
