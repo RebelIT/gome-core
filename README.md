@@ -8,6 +8,8 @@ are developed.
 
 Start it up, add devices (kept in local database), hit the api's to perform actions against loaded devices.
 
+**WIP** Supported devices added as I have time and the need...
+
 ## Application Configuration
 ### Defaults
 * name: `"gome-core"`
