@@ -12,6 +12,7 @@ type Conf struct {
 	Name         string
 	AuthToken    string
 	ListenPort   string
+	GenerateSpec bool
 }
 
 var App *Conf
@@ -29,9 +30,10 @@ func Runtime() {
 func configDefaults(c *Conf) {
 	c.Name = "gome-core"
 	c.StatAddr = ""
-	c.DbPath = "/usr/local/gome-core/db"
+	c.DbPath = "badgerDatabase"
 	c.AuthToken = "changeMePlease"
 	c.ListenPort = "6660"
+	c.GenerateSpec = false
 	return
 }
 
@@ -42,6 +44,7 @@ func configFlags(c *Conf) {
 	flag.StringVar(&c.SlackWebhook, "slackWebhook", c.SlackWebhook, "slack webhook url")
 	flag.StringVar(&c.AuthToken, "authToken", c.AuthToken, "app authentication token")
 	flag.StringVar(&c.ListenPort, "port", c.ListenPort, "http listener http port")
+	flag.BoolVar(&c.GenerateSpec, "generateSpec", c.GenerateSpec, "print the http spec to console")
 	flag.Parse()
 	return
 }
