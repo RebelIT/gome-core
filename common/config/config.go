@@ -13,6 +13,7 @@ type Conf struct {
 	AuthToken    string
 	ListenPort   string
 	GenerateSpec bool
+	FullMemory	 bool
 }
 
 var App *Conf
@@ -34,6 +35,7 @@ func configDefaults(c *Conf) {
 	c.AuthToken = "changeMePlease"
 	c.ListenPort = "6660"
 	c.GenerateSpec = false
+	c.FullMemory = false
 	return
 }
 
@@ -45,6 +47,7 @@ func configFlags(c *Conf) {
 	flag.StringVar(&c.AuthToken, "authToken", c.AuthToken, "app authentication token")
 	flag.StringVar(&c.ListenPort, "port", c.ListenPort, "http listener http port")
 	flag.BoolVar(&c.GenerateSpec, "generateSpec", c.GenerateSpec, "print the http spec to console")
+	flag.BoolVar(&c.FullMemory, "fullMemory", c.FullMemory, "run database with full memory cache mem > 1GB required")
 	flag.Parse()
 	return
 }
