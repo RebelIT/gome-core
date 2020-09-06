@@ -3,6 +3,7 @@ package config
 import (
 	"flag"
 	"log"
+	"os"
 )
 
 type Conf struct {
@@ -13,7 +14,7 @@ type Conf struct {
 	AuthToken    string
 	ListenPort   string
 	GenerateSpec bool
-	FullMemory	 bool
+	FullMemory   bool
 }
 
 var App *Conf
@@ -22,6 +23,7 @@ func Runtime() {
 	log.Printf("INFO: loading runtime configuration")
 	c := &Conf{}
 	configDefaults(c)
+	configEnvironment(c)
 	configFlags(c)
 
 	App = c
@@ -36,6 +38,40 @@ func configDefaults(c *Conf) {
 	c.ListenPort = "6660"
 	c.GenerateSpec = false
 	c.FullMemory = false
+	return
+}
+
+func configEnvironment(c *Conf) {
+	name := os.Getenv("CORE_NAME")
+	statsd := os.Getenv("CORE_STATSD")
+	dbPath := os.Getenv("CORE_DBPATH")
+	slackWebhook := os.Getenv("CORE_SLACK")
+	authToken := os.Getenv("CORE_TOKEN")
+	port := os.Getenv("CORE_PORT")
+	fullMemory := os.Getenv("CORE_MEMORY")
+
+	if name != "" {
+		c.Name = name
+	}
+	if statsd != "" {
+		c.StatAddr = statsd
+	}
+	if dbPath != "" {
+		c.DbPath = dbPath
+	}
+	if slackWebhook != "" {
+		c.SlackWebhook = slackWebhook
+	}
+	if authToken != "" {
+		c.AuthToken = authToken
+	}
+	if port != "" {
+		c.ListenPort = port
+	}
+	if fullMemory != "" {
+		c.FullMemory = true
+	}
+
 	return
 }
 
