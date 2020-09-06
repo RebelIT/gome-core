@@ -222,7 +222,7 @@ func HandlerKeypress(w http.ResponseWriter, r *http.Request) {
 	if !validateKeyInput(key) {
 		w.WriteHeader(http.StatusBadRequest)
 		stat.Http(r.Method, stat.HTTPIN, r.URL.String(), http.StatusBadRequest)
-		log.Printf("ERROR: roku HandlerKeypress %s", fmt.Errorf("bad input %s",key))
+		log.Printf("ERROR: roku HandlerKeypress %s", fmt.Errorf("bad input %s", key))
 		return
 	}
 

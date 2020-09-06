@@ -88,7 +88,7 @@ func validateAuth(authorization string) bool {
 	return false
 }
 
-func GenerateSpec(){
+func GenerateSpec() {
 	router := NewRouter()
 	err := router.Walk(func(route *mux.Route, router *mux.Router, ancestors []*mux.Route) error {
 		tmpl, _ := route.GetPathTemplate()
