@@ -2,6 +2,7 @@ package database
 
 import (
 	"github.com/dgraph-io/badger"
+	"github.com/rebelit/gome-core/common/config"
 	"github.com/rebelit/gome-core/common/stat"
 	"log"
 )
