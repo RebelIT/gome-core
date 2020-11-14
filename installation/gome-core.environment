@@ -1,0 +1,7 @@
+CORE_NAME="gome-core"
+CORE_STATSD="127.0.0.1:8125"
+CORE_DBPATH="/etc/gome/core/db"
+CORE_SLACK=""
+CORE_TOKEN="chamgeme"
+CORE_PORT="6660"
+CORE_MEMORY="true"
