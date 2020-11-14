@@ -6,6 +6,7 @@
 - Change: dockerfile for compose
 - Fix: database release lock on db error
 - Fix: initialize database make dir full recursive path
+- Fix: missing http metric tag
 
 ### 1.0.0 - untagged
 * initial release
