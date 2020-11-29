@@ -19,7 +19,7 @@ func HandlerInfoGet(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		stat.Http(r.Method, stat.HTTPIN, r.URL.String(), http.StatusInternalServerError)
-		log.Printf("ERROR: roku HandlerInfoGet %s", err)
+		log.Printf("ERROR: roku HandlerInfoGet from DB %s", err)
 		return
 	}
 
@@ -27,7 +27,7 @@ func HandlerInfoGet(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		stat.Http(r.Method, stat.HTTPIN, r.URL.String(), http.StatusInternalServerError)
-		log.Printf("ERROR: roku HandlerInfoGet %s", err)
+		log.Printf("ERROR: roku HandlerInfoGet dev info %s", err)
 		return
 	}
 
